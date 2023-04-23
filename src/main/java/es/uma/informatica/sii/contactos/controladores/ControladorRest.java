@@ -3,8 +3,8 @@ package es.uma.informatica.sii.contactos.controladores;
 import java.net.URI;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,6 +20,7 @@ import es.uma.informatica.sii.contactos.servicios.LogicaContactos;
 import es.uma.informatica.sii.contactos.servicios.excepciones.ContactoNoEncontrado;
 
 @RestController
+@CrossOrigin
 @RequestMapping("/api/agenda/contactos")
 public class ControladorRest {
 	private LogicaContactos servicio;
@@ -34,7 +35,7 @@ public class ControladorRest {
 	}
 
 	@PostMapping
-	public ResponseEntity<?> aniadirContacto(@RequestBody Contacto contacto, UriComponentsBuilder builder) {
+	public ResponseEntity<Contacto> aniadirContacto(@RequestBody Contacto contacto, UriComponentsBuilder builder) {
 		contacto = servicio.aniadirContacto(contacto);
 		URI uri = builder
 				.path("/api")
@@ -43,7 +44,7 @@ public class ControladorRest {
 				.path(String.format("/%d",contacto.getId()))
 				.build()
 				.toUri();
-		return ResponseEntity.created(uri).build();
+		return ResponseEntity.created(uri).body(contacto);
 	}
 
 	@GetMapping("{id}")
@@ -52,11 +53,11 @@ public class ControladorRest {
 	}
 
 	@PutMapping("{id}")
-	public ResponseEntity<?> modificarContacto(@PathVariable Long id, @RequestBody Contacto contacto) {
+	public ResponseEntity<Contacto> modificarContacto(@PathVariable Long id, @RequestBody Contacto contacto) {
 		contacto.setId(id);
 		try {
-			servicio.modificarContacto(contacto);
-			return ResponseEntity.ok().build();
+			contacto = servicio.modificarContacto(contacto);
+			return ResponseEntity.ok(contacto);
 		} catch (ContactoNoEncontrado e) {
 			return ResponseEntity.notFound().build();
 		}

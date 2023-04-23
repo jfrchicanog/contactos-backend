@@ -35,9 +35,9 @@ public class LogicaContactos {
 		return repo.findById(id);
 	}
 	
-	public void modificarContacto(Contacto contacto) {
+	public Contacto modificarContacto(Contacto contacto) {
 		if (repo.existsById(contacto.getId())) {
-			repo.save(contacto);
+			return repo.save(contacto);
 		} else {
 			throw new ContactoNoEncontrado();
 		}

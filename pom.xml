@@ -13,7 +13,8 @@
 	<artifactId>contactos</artifactId>
 	<version>1.0.0</version>
 	<name>contactos</name>
-	<description>Backend de aplicación de contactos de Sistemas de Información para Internet</description>
+	<description>Backend de aplicación de contactos de Sistemas de Información
+		para Internet</description>
 	<properties>
 		<java.version>17</java.version>
 	</properties>
