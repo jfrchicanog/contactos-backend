@@ -1,6 +1,5 @@
 # This file is a copy of the exaple provided in the 
 # documentation of the official Wordpress docker image (https://hub.docker.com/_/wordpress?tab=description)
-version: '3.1'
 
 services:
   backend:
@@ -21,7 +20,7 @@ services:
       SPRING_JPA_DATABASE_PLATFORM: org.hibernate.dialect.MySQLDialect
 
   db:
-    image: mysql:5.7
+    image: mysql:8.4.0
     restart: always
     environment:
       MYSQL_DATABASE: exampledb
